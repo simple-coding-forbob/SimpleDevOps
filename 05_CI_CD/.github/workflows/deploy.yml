@@ -13,10 +13,10 @@ jobs:
 
       - name: SSH key 생성
         run: |
-          echo "${{ secrets.AWS_KEY }}" > was.pem
+          echo "${{ secrets.EC2_SSH_KEY }}" > was.pem
           chmod 600 was.pem
 
       - name: 파일 전송
         run: |
           scp -o StrictHostKeyChecking=no -i was.pem 01_front.txt \
-          ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }}:/home/ubuntu/
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/
