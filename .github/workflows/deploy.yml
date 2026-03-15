@@ -18,7 +18,7 @@ jobs:
         run: |
           cd frontend        # React 프로젝트 폴더로 이동
           npm install        # package.json 기반으로 node_modules 설치
-          npm run build      # React production build 실행 → build 폴더 생성
+          npm run build      # React production build 실행 → dist 폴더 생성
 
       # 3) SSH 인증에 사용할 pem 키 파일 생성
       - name: SSH key 생성
@@ -29,5 +29,5 @@ jobs:
       # 4) React build 결과를 EC2 서버 nginx html 폴더로 전송
       - name: build 전송
         run: |
-          scp -o StrictHostKeyChecking=no -i was.pem -r frontend/build/* \                          
+          scp -o StrictHostKeyChecking=no -i was.pem -r frontend/dist \                          
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
