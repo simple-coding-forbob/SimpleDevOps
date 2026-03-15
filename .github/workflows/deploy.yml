@@ -1,0 +1,36 @@
+name: react deploy   # GitHub Actions 화면에 표시되는 워크플로우 이름
+
+on:
+  push:
+    branches: [ main ]   # main 브랜치에 push 발생 시 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest   # GitHub에서 제공하는 Ubuntu Linux 서버에서 실행
+
+    steps:
+
+      # 1) GitHub repository 소스를 Actions 서버로 다운로드
+      - uses: actions/checkout@v4
+
+      # 2) React 프로젝트 빌드
+      - name: React build
+        run: |
+          cd frontend        # React 프로젝트 폴더로 이동
+          npm install        # package.json 기반으로 node_modules 설치
+          npm run build      # React production build 실행 → build 폴더 생성
+
+      # 3) SSH 인증에 사용할 pem 키 파일 생성
+      - name: SSH key 생성
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > was.pem   # GitHub Secrets에 저장된 pem 키를 파일로 생성
+          chmod 600 was.pem                             # SSH는 private key 권한이 600이 아니면 접속 거부
+
+      # 4) React build 결과를 EC2 서버 nginx html 폴더로 전송
+      - name: build 전송
+        run: |
+          scp -o StrictHostKeyChecking=no \              # 최초 접속 시 host key 확인 생략
+          -i was.pem \                                   # SSH 인증에 사용할 private key
+          -r frontend/build/* \                          # React build 결과 파일
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
+          # EC2 서버의 nginx 웹 루트로 파일 복사
