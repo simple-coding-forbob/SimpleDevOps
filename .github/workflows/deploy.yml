@@ -48,4 +48,4 @@ jobs:
 
       # 7) 서버 시작
       - name: start backend
-        run: ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} nohup java -jar ~/SimpleDmsReact-0.0.1-SNAPSHOT.war > app.log 2>&1 &
+        run: ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} java -jar ~/SimpleDmsReact-0.0.1-SNAPSHOT.war > app.log 2>&1
