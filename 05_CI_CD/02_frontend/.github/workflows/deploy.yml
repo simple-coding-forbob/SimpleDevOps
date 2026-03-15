@@ -29,5 +29,5 @@ jobs:
       # 4) React build 결과를 EC2 서버 nginx html 폴더로 전송
       - name: build 전송
         run: |
-          scp -o StrictHostKeyChecking=no -i was.pem -r frontend/dist \                          
+          scp -o StrictHostKeyChecking=no -i was.pem -r frontend/dist \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
