@@ -30,4 +30,4 @@ jobs:
       - name: build 전송
         run: |
           scp -o StrictHostKeyChecking=no -i was.pem -r frontend/dist/* \
-          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
+          ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/html/
