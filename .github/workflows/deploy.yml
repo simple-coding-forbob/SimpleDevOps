@@ -44,10 +44,8 @@ jobs:
 
       # 6) 기존 서버 종료
       - name: stop backend
-        run: |
-          ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} pkill -f war || true
+        run: ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} pkill -f war || true
 
       # 7) 서버 시작
       - name: start backend
-        run: |
-          ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} nohup java -jar ~/SimpleDmsReact-0.0.1-SNAPSHOT.war > app.log 2>&1 &
+        run: ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} nohup java -jar ~/SimpleDmsReact-0.0.1-SNAPSHOT.war > app.log 2>&1 &
