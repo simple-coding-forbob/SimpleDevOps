@@ -19,7 +19,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3) Spring Boot WAR 빌드
+      # 3) Spring Boot WAR 빌드1
+      - name: Grant execute permission
+        run: chmod +x SimpleDmsReact/gradlew
+
+      # 3) Spring Boot WAR 빌드2
       - name: build
         run: |
           cd SimpleDmsReact
