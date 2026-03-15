@@ -42,11 +42,11 @@ jobs:
           SimpleDmsReact/build/libs/*.war \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~
 
-      # 6) 기존 서버 종료
+      # 6) 기존 서버 종료 (8080 포트 기준)
       - name: stop backend
         run: |
           ssh -o StrictHostKeyChecking=no -i was.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-          "pkill -f SimpleDmsReact-0.0.1-SNAPSHOT.war || true"
+          "sudo fuser -k 8080/tcp || true"
 
       # 7) 서버 시작
       - name: start backend
