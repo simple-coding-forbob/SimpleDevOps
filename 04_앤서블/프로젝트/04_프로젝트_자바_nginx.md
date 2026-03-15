@@ -1,7 +1,7 @@
 # was
 ---
 - name: Setup WAS Server
-  hosts: was
+  hosts: local
   become: yes
 
   tasks:
