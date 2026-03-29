@@ -1,0 +1,39 @@
+# -------------------------------
+# Deployment (컨테이너 실행 관리)
+# -------------------------------
+apiVersion: apps/v1          # Deployment API 버전
+kind: Deployment             # 리소스 종류 (Pod 관리)
+metadata:
+  name: my-nginx             # Deployment 이름
+spec:
+  replicas: 1                # Pod 개수 (컨테이너 개수)
+  selector:
+    matchLabels:
+      app: my-nginx          # 이 라벨을 가진 Pod 선택
+  template:                  # 실제 생성될 Pod 설정
+    metadata:
+      labels:
+        app: my-nginx        # Pod에 붙는 라벨 (Service가 찾을 때 사용)
+    spec:
+      containers:
+        - name: nginx        # 컨테이너 이름
+          image: nginx       # 사용할 Docker 이미지
+          ports:
+            - containerPort: 80   # 컨테이너 내부 포트
+
+---
+# -------------------------------
+# Service (외부 접속용)
+# -------------------------------
+apiVersion: v1               # Service API 버전
+kind: Service                # 리소스 종류 (접속 통로)
+metadata:
+  name: my-nginx-service     # Service 이름
+spec:
+  type: NodePort             # 외부에서 접속 가능하게 설정
+  selector:
+    app: my-nginx            # 연결할 Pod (라벨 기준으로 연결됨)
+  ports:
+    - port: 80               # Service 내부 포트
+      targetPort: 80         # Pod(컨테이너) 포트
+      nodePort: 30007        # 외부 접속 포트 (30000~32767 가능)
