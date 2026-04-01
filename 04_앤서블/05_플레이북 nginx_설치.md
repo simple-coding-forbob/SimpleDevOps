@@ -8,7 +8,7 @@
   become: yes
   # 작업 목록
   tasks:
-    # 1️⃣ nginx 패키지 설치
+    # 1) nginx 패키지 설치
     - name: Install nginx
       # Ubuntu 패키지 설치 모듈
       apt:
@@ -19,7 +19,7 @@
         # apt update 실행
         update_cache: yes
 
-    # 2️⃣ nginx 서비스 시작
+    # 2) nginx 서비스 시작
     - name: Start nginx service
       # 서비스 제어 모듈
       systemd:

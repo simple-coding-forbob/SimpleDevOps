@@ -1,19 +1,15 @@
 # 벡엔드 전송: 깃허브 액션 -> AWS 컴퓨터
-Nginx 설치됨
-배포 위치 = /var/www/html/
+# 자바 설치됨
+배포 위치 = /home/ubuntu
 
-# 리액트 CI/CD 흐름
+# 벡엔드 CI/CD 흐름
 git push
    ↓
 GitHub Actions(배포 자동화)
    ↓
-npm install
+war 압축
    ↓
-npm run build
-   ↓
-build 폴더 생성
-   ↓
-EC2 nginx html 전송
+EC2 전송: /home/ubuntu
 
 # Secrets 설정
 Settings → Secrets and Variables → Actions에서 추가
@@ -22,16 +18,15 @@ EC2_USER → EC2 로그인 유저 (ubuntu)
 EC2_SSH_KEY → PEM 파일 내용 (줄바꿈 포함)
 
 
-# 리액트 프로젝트 폴더 구조
-frontend
+# 벡엔드 프로젝트 폴더 구조, (box drawing character: ├)
+simpledmsreact
  ├ src
- ├ public
- ├ package.json
+ ├ gradle
  └ build
  
 # 프로젝트 구조
 project
- ├─ frontend/*
+ ├─ simpledmsreact/*
  └─ .github
      └─ workflows
          └─ deploy.yml

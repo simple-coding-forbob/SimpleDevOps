@@ -1,36 +1,22 @@
-name: deploy   # 워크플로우 이름 (GitHub Actions 화면에 표시됨)
+name: deploy   
 
 on:
   push:
-    branches: [ main ]   # main 브랜치에 push 될 때 실행
+    branches: [ main ]   
 
 jobs:
-  deploy:                # 작업 이름
-    runs-on: ubuntu-latest   # GitHub가 제공하는 Ubuntu Linux 서버에서 실행
+  deploy:                
+    runs-on: ubuntu-latest   
 
     steps:
       - uses: actions/checkout@v4
-        # 현재 GitHub repository의 소스를 Actions 서버로 다운로드
 
-      - name: SSH key 생성
+      - name: SSH key
         run: |
-          # GitHub Secrets에 저장된 EC2_SSH_KEY 값을 파일로 생성(| : 여러줄 명령)
           echo "${{ secrets.EC2_SSH_KEY }}" > was.pem
-
-          # SSH는 private key 권한이 600이 아니면 거부하므로 권한 변경
           chmod 600 was.pem
-
-      - name: 파일 전송
+          
+      - name: transfer file
         run: |
-          # scp를 이용해 EC2 서버로 파일 전송
-          # -o StrictHostKeyChecking=no
-          #   처음 접속 시 host key 확인 무시하고 생략 (CI/CD에서 많이 사용)
-          # -i was.pem
-          #   SSH 인증에 사용할 private key 파일
-          # ${{ secrets.EC2_USER }}
-          #   EC2 로그인 사용자 (예: ubuntu)
-          # ${{ secrets.EC2_HOST }}
-          #   EC2 public IP
           scp -o StrictHostKeyChecking=no -i was.pem 01_front.txt \
           ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ubuntu/
-          # /home/ubuntu/ 디렉토리로 파일 복사

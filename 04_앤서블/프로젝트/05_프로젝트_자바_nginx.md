@@ -1,4 +1,4 @@
-# was
+# was.yml
 ---
 - name: Setup WAS Server
   hosts: local

@@ -1,0 +1,16 @@
+# docker.yml
+---
+- name: Install and Start Docker on Local EC2
+  hosts: local
+  become: yes
+  tasks:
+    - name: Install docker package
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes

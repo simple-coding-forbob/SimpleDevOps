@@ -1,0 +1,15 @@
+# nginx.yml
+- name: Install and Start Nginx on Local EC2
+  hosts: local
+  become: yes
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Start nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes

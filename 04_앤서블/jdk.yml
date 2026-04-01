@@ -1,0 +1,11 @@
+# jdk.yml
+---
+- name: Install JDK on Local EC2
+  hosts: local
+  become: yes
+  tasks:
+    - name: Install OpenJDK 17  
+      apt:    
+        name: openjdk-17-jdk
+        state: present       
+        update_cache: yes

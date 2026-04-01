@@ -13,7 +13,7 @@ npm run build
    ↓
 build 폴더 생성
    ↓
-EC2 nginx html 전송
+EC2 전송: /var/www/html/
 
 # Secrets 설정
 Settings → Secrets and Variables → Actions에서 추가
